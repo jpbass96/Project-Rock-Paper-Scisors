@@ -2,6 +2,8 @@ import random
 import time
 
 class Bot:
+	bot = None
+
 	def BotInput(self):
 		self.bot = random.randrange(1,3+1)
 

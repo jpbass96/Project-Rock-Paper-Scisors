@@ -3,67 +3,71 @@ import random
 import bot
 import player
 
-Player = player.Player()
-Bot = bot.Bot()
+PlayerObj = player.Player()
+BotObj = bot.Bot()
 
 
-class game:
+class Game:
+	def __init__(self):
+		self.lose = False
+		self.win = False
+		self.draw = False
+
+
 	
-	draw = False
-	win = False
-	lose = False
-
-	def GetResults(self):
-		return (self.draw)
-		return (self.win)
-		return (self.lose)
-	
-	def HumRules(self):
+	def hum_rules(self):
 		print ("Press 1 for Rock")
 		
 		print ("Press 2 for Paper")
 		
 		print ("Press 3 for Scissors")
+
 		time.sleep(.5)
 
 
+	def get_inputs(self):	
 
-	def CheckLose(self):
-		Player.GetPlay()
-		Bot.GetBot()
+		PlayerObj.HumInput()
+		BotObj.BotInput()
 
-		if Bot.bot == 1 and int(Player.play) == 3:
+
+
+	def check_lose(self):
+		PlayerObj.GetPlay()
+		BotObj.GetBot()
+
+		if BotObj.GetBot() == 1 and int(PlayerObj.GetPlay()) == 3:
 			self.lose = True
 
-		if Bot.bot == 2 and int(Player.play) == 1:
+		if BotObj.GetBot() == 2 and int(PlayerObj.GetPlay()) == 1:
 			self.lose = True
 
 
-		if Bot.bot == 3 and int(Player.play) == 2:
+		if BotObj.GetBot() == 3 and int(PlayerObj.GetPlay()) == 2:
 			self.lose = True
 
-	def CheckWin(self):
-		Player.GetPlay()
-		Bot.GetBot()
+	def check_win(self):
+		PlayerObj.GetPlay()
+		BotObj.GetBot()
 
-		if Bot.bot == 1 and int(Player.play) == 2:
+		if BotObj.GetBot() == 1 and int(PlayerObj.GetPlay()) == 2:
 			self.win = True
 		
-		if Bot.bot == 2 and int(Player.play) == 3:
+		if BotObj.GetBot() == 2 and int(PlayerObj.GetPlay()) == 3:
 			self.win = True
 
-		if Bot.bot == 3 and int(Player.play) == 1:
+		if BotObj.GetBot() == 3 and int(PlayerObj.GetPlay()) == 1:
 			self.win = True
 
-	def CheckDraw(self):
-		Player.GetPlay()
-		Bot.GetBot()
+	def check_draw(self):
+		PlayerObj.GetPlay()
+		BotObj.GetBot()
 
-		if Bot.bot / int(Player.play) == 1:
+		if BotObj.bot / int(PlayerObj.GetPlay()) == 1:
 			self.draw = True
 
 
-	def DramaPlay(self):
+	def drama_play(self):
 		print ("Rock...")
 		time.sleep(0.3)
 		print ("Paper...")
@@ -72,13 +76,16 @@ class game:
 		time.sleep(0.3)
 		print ("Shoot!")
 		time.sleep(0.3)
+		print (" ")
 
-	def GameResult(self):
+	def game_result(self):
 		if self.win == True:
 			print ("You Win!")
+			PlayerObj.score_change()
 
 		if self.lose == True:
 			print ("You Lose!")
+			PlayerObj.lives_change()
 
 		if self.draw == True:
 			print ("You Draw!")
@@ -86,18 +93,67 @@ class game:
 
 	
 
-	def Stats(self):
-		Player.HumStatConversion()
-		Bot.BotStatConversion()
+	def stats(self):
+		PlayerObj.HumStatConversion()
+		BotObj.BotStatConversion()
 
 		
-		print ("You Chose " +  str(Player.HumStatConversion()) + " and the bot chose " +  str(Bot.BotStatConversion()))
+		print ("You Chose " +  str(PlayerObj.HumStatConversion()) + " and the bot chose " +  str(BotObj.BotStatConversion()))
 		
-		Player.Status()
+		PlayerObj.Status()
 		
 		print (" ")
 		print (" ")
 		time.sleep(1.5)
+
+
+
+	def whole_game(self):
+		self.reset_result()
+		self.hum_rules()
+
+		self.get_inputs()
+
+		self.check_win()
+		self.check_lose()
+		self.check_draw()
+
+		self.drama_play()
+
+		self.game_result()
+		self.stats()
+
+	def reset_result(self):
+		self.win = False
+		self.lose = False
+		self.draw = False
+
+
+	def play_game(self):
+		PlayerObj.GetLives()
+		while PlayerObj.lives > 0:
+			self.whole_game()
+
+
+	def play_again(self):		
+			
+		good_input = False
+
+		while not good_input:
+			print ("Would you like to restart?")
+			print ("Type Yes or No")
+			restart = input("User Input Here: ")
+			if restart == ("No"):
+				print ("Thank you for playing Bass RPS!")
+				good_input = True
+			if restart == ("Yes"):
+				print ("Restarting Game")
+				print (" ")
+				PlayerObj.reset_life()
+				PlayerObj.reset_score()
+				self.play_game()
+
+
 
 
 

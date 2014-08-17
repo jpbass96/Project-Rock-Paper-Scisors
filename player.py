@@ -1,13 +1,16 @@
-import GameFlow
+
 import time
 import random
 
-GameFlow = GameFlow.game()
+
+
 
 
 class Player:
-	Score = 0
-	Lives = 5
+
+	def __init__(self):
+		self.score = 0
+		self.lives = 5
 
 	def HumInput(self):
 		correct = False
@@ -18,21 +21,20 @@ class Player:
 				print (" ")
 
 
-	def PlayerChanges(self):
-		GameFlow.GetResults()
+	def score_change(self):
+		self.score += 1
 
-		if GameFlow.win == True:
-			Score += 1
-			
-		if GameFlow.lose == True:
-			Lives -= 1
+	def lives_change(self):
+		self.lives -= 1
+
+
 
 	
 	def GetScore(self):
-		return (self.Score)
+		return (self.score)
 
 	def GetLives(self):
-		return (self.Lives)
+		return (self.lives)
 
 	def GetPlay(self):
 		return (self.play)	
@@ -40,7 +42,7 @@ class Player:
 
 
 	def Status(self):
-		print ("Lives: " + str(self.Lives))
+		print ("Lives: " + str(self.lives))
 		print ("Score: " + str(self.score))
 
 
@@ -53,5 +55,14 @@ class Player:
 
 		if int(self.play) == 3:
 			return ("Scissors")
+
+
+	def reset_life(self):
+		self.lives += 5
+
+	def reset_score(self):
+		self.score -= self.score
+
+
 			
 			
