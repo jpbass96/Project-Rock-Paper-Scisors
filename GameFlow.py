@@ -138,10 +138,9 @@ class Game:
 	def play_again(self):		
 			
 		good_input = False
-
+		print ("Would you like to restart?")
+		print ("Type Yes or No")
 		while not good_input:
-			print ("Would you like to restart?")
-			print ("Type Yes or No")
 			restart = input("User Input Here: ")
 			if restart == ("No"):
 				print ("Thank you for playing Bass RPS!")
